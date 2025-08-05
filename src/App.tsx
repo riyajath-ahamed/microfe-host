@@ -1,35 +1,42 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useEffect, useState, Suspense } from 'react';
+
+const remotes = {
+  dashboard: React.lazy(() => import('dashboard/DashboardApp')),
+  sidebar: React.lazy(() => import('sidebar/SidebarApp')),
+  trend: React.lazy(() => import('trend/TrendApp')),
+};
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [layout, setLayout] = useState([]);
+  const [flags, setFlags] = useState({});
+
+  useEffect(() => {
+    Promise.all([
+      fetch('/config/ui-config.json').then(r => r.json()),
+      fetch('/config/featureFlags.json').then(r => r.json())
+    ]).then(([layoutData, flagsData]) => {
+      setLayout(layoutData.layout);
+      setFlags(flagsData);
+    });
+  }, []);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div>
+      <h1>🧩 Micro Frontend Host</h1>
+      <Suspense fallback={<div>Loading...</div>}>
+        {layout.map((block) => {
+          const shouldRender = block.enabled && flags[block.featureFlag];
+          if (!shouldRender) return null;
+          const RemoteComponent = remotes[block.remote];
+          return (
+            <div key={block.id}>
+              <RemoteComponent />
+            </div>
+          );
+        })}
+      </Suspense>
+    </div>
+  );
 }
 
-export default App
+export default App;

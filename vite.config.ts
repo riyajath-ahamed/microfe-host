@@ -6,6 +6,9 @@ import federation from "@originjs/vite-plugin-federation";
 // https://www.npmjs.com/package/@originjs/vite-plugin-federation
 
 export default defineConfig({
+  server: {
+    port: 5001,
+  },
   plugins: [
     react(),
     federation({

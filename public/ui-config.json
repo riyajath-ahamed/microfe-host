@@ -1,0 +1,25 @@
+{
+  "layout": [
+    {
+      "id": "dashboard",
+      "remote": "dashboard",
+      "component": "Dashboard",
+      "enabled": true,
+      "featureFlag": "enableDashboard"
+    },
+    {
+      "id": "sidebar",
+      "remote": "sidebar",
+      "component": "Sidebar",
+      "enabled": true,
+      "featureFlag": "enableSidebar"
+    },
+    {
+      "id": "trend",
+      "remote": "trend",
+      "component": "Trend",
+      "enabled": true,
+      "featureFlag": "enableTrend"
+    }
+  ]
+}
