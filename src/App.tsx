@@ -1,14 +1,21 @@
 import React, { useEffect, useState, Suspense } from 'react';
 
 const remotes = {
-  dashboard: React.lazy(() => import('dashboard/DashboardApp')),
-  sidebar: React.lazy(() => import('sidebar/SidebarApp')),
-  trend: React.lazy(() => import('trend/TrendApp')),
+  dashboard: React.lazy(() => import('dashboard/Dashboard')),
+  sidebar: React.lazy(() => import('sidebar/Sidebar')),
+  trend: React.lazy(() => import('trend/Trend')),
+};
+
+type LayoutBlock = {
+  id: string;
+  remote: keyof typeof remotes;
+  enabled: boolean;
+  featureFlag: string;
 };
 
 function App() {
-  const [layout, setLayout] = useState([]);
-  const [flags, setFlags] = useState({});
+  const [layout, setLayout] = useState<LayoutBlock[]>([]);
+  const [flags, setFlags] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
     Promise.all([
@@ -20,6 +27,9 @@ function App() {
     });
   }, []);
 
+  console.log('Layout:', layout);
+  console.log('Feature Flags:', flags);
+
   return (
     <div>
       <h1>🧩 Micro Frontend Host</h1>
@@ -28,6 +38,7 @@ function App() {
           const shouldRender = block.enabled && flags[block.featureFlag];
           if (!shouldRender) return null;
           const RemoteComponent = remotes[block.remote];
+          console.log("RemoteComponent:", RemoteComponent);
           return (
             <div key={block.id}>
               <RemoteComponent />

@@ -8,6 +8,7 @@ import federation from "@originjs/vite-plugin-federation";
 export default defineConfig({
   server: {
     port: 5001,
+    cors: true,
   },
   plugins: [
     react(),
@@ -15,9 +16,9 @@ export default defineConfig({
       name: 'host',
       filename: 'remoteEntry.js',
       remotes: {
-        dashboard: 'dashboard@http://localhost:3001/remoteEntry.js',
-        sidebar: 'sidebar@http://localhost:3002/remoteEntry.js',
-        trend: 'trend@http://localhost:3003/remoteEntry.js',
+        dashboard: 'http://localhost:3001/assets/remoteEntry.js',
+        sidebar: 'http://localhost:4001/assets/remoteEntry.js',
+        trend: 'http://localhost:6001/assets/remoteEntry.js',
       },
       shared: ['react', 'react-dom'],
     }),
