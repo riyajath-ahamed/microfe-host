@@ -14,7 +14,6 @@ type LayoutBlock = {
   featureFlag: string;
 };
 
-// ✅ Simple error boundary for remotes
 class RemoteErrorBoundary extends React.Component<{ children: React.ReactNode }, { hasError: boolean }> {
   constructor(props: any) {
     super(props);
@@ -72,7 +71,7 @@ function App() {
 
   return (
     <div>
-      <h1>🧩 Micro Frontend Host</h1>
+      <h1 className='text-2xl font-bold'>🧩 Micro Frontend Host</h1>
       <Suspense fallback={<div>Loading remote...</div>}>
         {layout.map((block) => {
           const shouldRender = block.enabled && flags[block.featureFlag];
