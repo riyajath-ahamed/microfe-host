@@ -5,6 +5,8 @@ const remotes = {
   dashboard: React.lazy(() => import('dashboard/Dashboard')),
   sidebar: React.lazy(() => import('sidebar/Sidebar')),
   trend: React.lazy(() => import('trend/Trend')),
+  trendApp: React.lazy(() => import('trend/TrendApp')),
+
 };
 
 type LayoutBlock = {
@@ -90,6 +92,7 @@ function App() {
           );
         })}
       </Suspense>
+
     </div>
   );
 }

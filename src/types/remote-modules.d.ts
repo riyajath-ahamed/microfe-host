@@ -12,3 +12,8 @@ declare module 'trend/Trend' {
   const Trend: React.ComponentType;
   export default Trend;
 }
+
+declare module 'trend/TrendApp' {
+  const TrendApp: React.ComponentType;
+  export default TrendApp;
+}

@@ -27,7 +27,7 @@ export default defineConfig({
         sidebar: 'http://localhost:4001/assets/remoteEntry.js',
         trend: 'http://localhost:6001/assets/remoteEntry.js',
       },
-      shared: ['react', 'react-dom'],
+      shared: ['react', 'react-dom', '@chakra-ui/react'],
     }),
     tailwindcss()
   ],
